@@ -70,6 +70,24 @@ namespace SuperHerosNet.Controllers
             return Ok(await _context.SuperHeroes.ToListAsync());
         }
 
+        //DELETE / REMOVE a superhero
+        [HttpDelete]
+        public async Task<ActionResult<List<SuperHero>>> DeleteHero(int id)
+        {
+            var dbhero = await _context.SuperHeroes.FindAsync(id);
+            if (dbhero == null)
+            {
+                return NotFound("Hero not found");
+            }
+            else
+            {
+                _context.SuperHeroes.Remove(dbhero);
+                await _context.SaveChangesAsync();
+            }
+
+            return Ok(await _context.SuperHeroes.ToListAsync());
+        }
+
     }
 
 
