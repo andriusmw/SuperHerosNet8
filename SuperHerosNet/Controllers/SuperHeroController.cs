@@ -17,7 +17,7 @@ namespace SuperHerosNet.Controllers
         {
             _context = context;
         }
-
+        //Get all superheroes
         [HttpGet]
         public async Task<ActionResult<List<SuperHero>>> GetAllHeroes()
         {
@@ -25,6 +25,20 @@ namespace SuperHerosNet.Controllers
          
             return Ok(heroes);
         }
+
+        //Get a single hero by ID
+        [HttpGet("{id}")]
+        public async Task<ActionResult<List<SuperHero>>> GetHero(int id)
+        {
+            var hero = await _context.SuperHeroes.FindAsync(id);
+            if(hero == null)
+            {
+                return NotFound("Hero not found");
+            }
+
+            return Ok(hero);
+        }
+
     }
 
 
