@@ -49,6 +49,27 @@ namespace SuperHerosNet.Controllers
             return Ok(await _context.SuperHeroes.ToListAsync());
         }
 
+        //PUT / EDIT a superhero
+        [HttpPut]
+        public async Task<ActionResult<List<SuperHero>>> UpdateHero(SuperHero updatedHero)
+        {
+            var dbhero = await _context.SuperHeroes.FindAsync(updatedHero.Id);
+            if (dbhero == null)
+            {
+                return NotFound("Hero not found");
+            } else
+            {
+                dbhero.Name = updatedHero.Name;
+                dbhero.FirstName = updatedHero.FirstName;
+                dbhero.LastName = updatedHero.LastName;
+                dbhero.Place = updatedHero.Place;
+
+                await _context.SaveChangesAsync();
+            }
+
+            return Ok(await _context.SuperHeroes.ToListAsync());
+        }
+
     }
 
 
